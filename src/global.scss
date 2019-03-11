@@ -9,3 +9,43 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+
+ion-card {
+    width: 75% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+ion-card ion-card-header{
+    padding-bottom: 10px;   
+}
+
+ion-card ion-card-header ion-card-subtitle {
+    text-align: center;
+}
+
+ion-card ion-card-header ion-card-title {
+    color: rgba(var(--ion-text-color-rgb,0,0,0),.54);
+    text-align: center;
+    font-weight: bolder;
+    font-size: 60px;
+    line-height: 55px;  
+
+}
+
+ion-calendar .days-btn.dia-cumprido {
+    background-color: green !important;
+}
+
+ion-calendar .days-btn.dia-nao-cumprido {
+    background-color: red !important;
+}
+
+ion-calendar .days-btn {
+    background-color: transparent !important;
+    border-radius: 0px !important;
+    width: 46px !important;
+}
+
+ion-calendar .days-btn p{
+    // color: #333 !important;
+}
