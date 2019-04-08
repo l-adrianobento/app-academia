@@ -9,25 +9,14 @@
 <ion-content>
       
 
-      <ion-card (click)="showTrainType('A')">
+      <ion-card *ngFor="let tipos of exerciciosTipos" (click)="showTrainType(tipos.tipo)">
           <ion-card-header>
             <!-- <ion-card-subtitle>Treino</ion-card-subtitle> -->
-            <ion-card-title>A</ion-card-title>
+            <ion-card-title>{{tipos.tipo}}</ion-card-title>
           </ion-card-header>
         
           <ion-card-content>
             Keep close to Nature's heart... and break clear away, once in awhile,
           </ion-card-content>
         </ion-card>
-
-        <ion-card (click)="showTrainType('B')">
-            <ion-card-header>
-              <!-- <ion-card-subtitle>Treino</ion-card-subtitle> -->
-              <ion-card-title>B</ion-card-title>
-            </ion-card-header>
-          
-            <ion-card-content>
-              Keep close to Nature's heart... and break clear away, once in awhile,
-            </ion-card-content>
-          </ion-card>
 </ion-content>

@@ -16,4 +16,22 @@
 
 <ion-content padding>
 
+  <form #formCadastro="ngForm" (submit)="cadastrar(formCadastro)">
+    <ion-item>
+      <ion-input [(ngModel)]="dadosForm.exercicio"  name="exercicio" placeholder="Exercicio" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Peso</ion-label>
+      <ion-select [(ngModel)]="dadosForm.peso" value="15" name="peso" okText="Ok" cancelText="Cancelar">
+        <ion-select-option value="5">5</ion-select-option>
+        <ion-select-option value="10">10</ion-select-option>
+        <ion-select-option value="15">15</ion-select-option>
+        <ion-select-option value="20">20</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" [disabled]="!formCadastro.valid">Cadastrar</ion-button>
+  </form>
+
 </ion-content>
