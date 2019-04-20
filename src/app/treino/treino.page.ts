@@ -14,6 +14,8 @@ import { Storage } from '@ionic/storage';
 export class TreinoPage implements OnInit {
 
   exercicios = [];
+  treinoId = null;
+  exerciciosIndex = null;
 
   type: string;
   
@@ -26,22 +28,47 @@ export class TreinoPage implements OnInit {
    }
 
    ngOnInit() {
-    this.storage.get(this.type).then((exercicios) => {
-      this.exercicios = exercicios;
+    this.storage.get(this.type).then((treino) => {
+      this.exercicios = treino.exercicios;
+      this.treinoId = treino.id;
     });
   }
 
-  async ediar(exercicio) {
+  async ediar(index) {
+    this.exerciciosIndex = index;
     const modal = await this.modalController.create({
       component: EditarExercicioPage,
       componentProps: {
-        'exercicio': exercicio,
+        'exercicio': this.exercicios[this.exerciciosIndex],
+        'treinoTipo': this.type
       }
     });
 
     modal.onDidDismiss().then((novoExercicio) => {
-      if(novoExercicio.data.novo)
-        this.exercicios.push(novoExercicio.data.novo);
+      if(Object.keys(novoExercicio.data.exercicio).length){
+        
+        if(novoExercicio.data.novo)
+          this.exercicios.push(novoExercicio.data.exercicio);
+        else{
+          this.exercicios.map((item, index) => {
+            if(index === this.exerciciosIndex){
+              item.nome = novoExercicio.data.exercicio.nome;
+              item.peso = novoExercicio.data.exercicio.peso;
+            }
+          });
+        }
+        let salvar = {
+          'exercicios': this.exercicios,
+          'tipo': this.type
+        };
+        // ao invez disso, salva um novo
+        this.firebaseService.updateTodo(salvar, this.treinoId).then(success => {
+          salvar['id'] = this.treinoId;
+          this.storage.set(this.type, salvar);
+          this.exerciciosIndex = null;
+
+        }).catch(err => console.log(err));
+      }
     }).catch(err => console.log(err));
 
     return await modal.present();

@@ -11,16 +11,16 @@ import { Storage } from '@ionic/storage';
 })
 export class Tab1Page {
 
-  exerciciosTipos: any[];
+  exercicios: any[];
 
   constructor (public navController: NavController, private firebaseService: FirebaseService, public storage: Storage){}
 
   ngOnInit() {
     this.firebaseService.getTodos().subscribe(res => {
-      this.exerciciosTipos = res[0].tipos;
+      this.exercicios = res;
 
-      for(let i = 0; i < this.exerciciosTipos.length; i++){
-        this.storage.set(this.exerciciosTipos[i].tipo, this.exerciciosTipos[i].exercicios);
+      for(let i = 0; i < this.exercicios.length; i++){
+        this.storage.set(this.exercicios[i].tipo, this.exercicios[i]);
       }
     });
   }

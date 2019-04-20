@@ -9,7 +9,7 @@
 
 <ion-content padding>
     <ion-list>
-      <ion-item *ngFor="let exercicio of exercicios" (click)="ediar(exercicio)">
+      <ion-item *ngFor="let exercicio of exercicios; let i = index" (click)="ediar(i)">
         <ion-label>{{exercicio.nome}} - {{exercicio.peso}}</ion-label>
       </ion-item>
     </ion-list>
