@@ -61,7 +61,6 @@ export class TreinoPage implements OnInit {
           'exercicios': this.exercicios,
           'tipo': this.type
         };
-        // ao invez disso, salva um novo
         this.firebaseService.updateTodo(salvar, this.treinoId).then(success => {
           salvar['id'] = this.treinoId;
           this.storage.set(this.type, salvar);

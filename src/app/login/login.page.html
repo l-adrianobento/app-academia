@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form #formLogin="ngForm" (submit)="entrar(formLogin)">
+  <ion-item>
+      <ion-input [(ngModel)]="dadosForm.email"  name="email" placeholder="Email" required></ion-input>
+    </ion-item>
+    <ion-button expand="block" type="submit" [disabled]="!formLogin.valid">Entrar</ion-button>
+  </form>
+
+</ion-content>

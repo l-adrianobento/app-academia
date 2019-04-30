@@ -13,18 +13,31 @@ export class FirebaseService {
  
   private todos: Observable<any[]>;
  
-  constructor(db: AngularFirestore) {
-    this.todosCollection = db.collection('exercicios');
- 
-    this.todos = this.todosCollection.snapshotChanges().pipe(
-      map(actions => {
-        return actions.map(a => {
-          const data = a.payload.doc.data();
-          const id = a.payload.doc.id;
-          return { id, ...data };
-        });
-      })
-    );
+  constructor(public db: AngularFirestore) {}
+
+  connectUser(email){
+
+    const conected = new Promise ((resolve, reject) => {
+
+      this.todosCollection = this.db.collection(email);
+
+      if(!this.todosCollection)
+        reject(false);
+  
+      this.todos = this.todosCollection.snapshotChanges().pipe(
+        map(actions => {
+          return actions.map(a => {
+            const data = a.payload.doc.data();
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
+
+      resolve(true);
+    });
+
+    return conected;
   }
  
   getTodos() {
