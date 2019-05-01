@@ -15,9 +15,34 @@ export class FirebaseService {
  
   constructor(public db: AngularFirestore) {}
 
+  userExists(email){
+    const conected = new Promise ((resolve, reject) => {
+
+      this.db.collection(email).ref.get().then(querySnapshot => {
+        if(querySnapshot.empty)
+          resolve(false);
+        else
+          resolve(true);
+      }).catch(e => {
+        reject(false);
+      });
+    });
+    
+    return conected;
+  }
+
   connectUser(email){
 
     const conected = new Promise ((resolve, reject) => {
+
+      this.db.collection(email).ref.get().then(querySnapshot => {
+        if(querySnapshot.empty)
+          resolve(false);
+        else
+          resolve(true);
+      }).catch(e => {
+        reject(false);
+      });
 
       this.todosCollection = this.db.collection(email);
 
@@ -33,8 +58,6 @@ export class FirebaseService {
           });
         })
       );
-
-      resolve(true);
     });
 
     return conected;

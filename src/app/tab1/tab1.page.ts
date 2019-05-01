@@ -16,6 +16,10 @@ export class Tab1Page {
   constructor (public navController: NavController, private firebaseService: FirebaseService, public storage: Storage){}
 
   ngOnInit() {
+
+    if(!this.firebaseService.getTodos())
+      this.navController.navigateRoot("/");
+
     this.firebaseService.getTodos().subscribe(res => {
       this.exercicios = res;
 
