@@ -3,6 +3,8 @@ import { NavController } from '@ionic/angular';
 import { TreinoPage } from '../treino/treino.page';
 import { FirebaseService } from '../services/firebase.service';
 import { Storage } from '@ionic/storage';
+import { ModalController } from '@ionic/angular';
+//import { CadastrarPage } from '../cadastrar/cadastrar.page';
 
 @Component({
   selector: 'app-tab1',
@@ -13,7 +15,10 @@ export class Tab1Page {
 
   exercicios: any[];
 
-  constructor (public navController: NavController, private firebaseService: FirebaseService, public storage: Storage){}
+  constructor (public navController: NavController, 
+               private firebaseService: FirebaseService, 
+               public storage: Storage,
+               public modalController: ModalController){}
 
   ngOnInit() {
 
@@ -35,5 +40,20 @@ export class Tab1Page {
 
   showTrainType(type) {
     this.navController.navigateForward(`treino/${type}`);
+  }
+
+  async addTreino() {
+    // const modal = await this.modalController.create({
+    //   component: CadastrarPage,
+    //   componentProps: {
+    //     //'email': email
+    //   }
+    // });
+  
+    // modal.onDidDismiss().then((retorno) => {
+      
+    // }).catch(err => console.log(err));
+  
+    // return await modal.present();
   }
 }

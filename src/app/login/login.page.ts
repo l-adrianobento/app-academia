@@ -4,6 +4,8 @@ import { FirebaseService } from '../services/firebase.service';
 import { Storage } from '@ionic/storage';
 import { NavController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import { CadastrarPage } from '../cadastrar/cadastrar.page';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,9 @@ export class LoginPage implements OnInit {
   constructor(private firebaseService: FirebaseService, 
               public storage: Storage, 
               public navController: NavController,
-              public alertController: AlertController) {
+              public alertController: AlertController,
+              public modalController: ModalController) {
+
     this.storage.get('logado').then((email) => {
       if(email){
         this.firebaseService.connectUser(email).then(success => {
@@ -46,7 +50,7 @@ export class LoginPage implements OnInit {
         }
         else {
           console.log("precisa cadastrar");
-          this.presentAlertConfirm();
+          this.presentAlertConfirm(email);
         }      
       
     }).catch(e => {
@@ -54,7 +58,7 @@ export class LoginPage implements OnInit {
     });
  }
 
- async presentAlertConfirm() {
+ async presentAlertConfirm(email) {
   const alert = await this.alertController.create({
     header: 'Usuario nao encontrado!',
     //message: 'O que deseja fazer?',
@@ -62,19 +66,37 @@ export class LoginPage implements OnInit {
       {
         text: 'Tentar Novamente',
         cssClass: 'secondary',
-        handler: (blah) => {
-          console.log('Confirm Cancel: blah');
-        }
       }, {
         text: 'Cadastrar',
         handler: () => {
-          console.log('Confirm Okay');
+          this.openCadastro(email)
         }
       }
     ]
   });
 
   await alert.present();
+}
+
+async openCadastro(email) {
+  const modal = await this.modalController.create({
+    component: CadastrarPage,
+    componentProps: {
+      'email': email
+    }
+  });
+
+  modal.onDidDismiss().then((retorno) => {
+    if(retorno.data['salvou']){
+      this.storage.set('logado', email).then(success => {
+        this.navController.navigateForward('treinos');
+      }).catch(e => {
+        console.log("erro", e);
+      });
+    }
+  }).catch(err => console.log(err));
+
+  return await modal.present();
 }
 
 }

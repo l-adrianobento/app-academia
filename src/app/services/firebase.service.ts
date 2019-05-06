@@ -62,6 +62,30 @@ export class FirebaseService {
 
     return conected;
   }
+
+  createUser(userObj){
+
+    const conected = new Promise ((resolve, reject) => {
+      let exercicios = [];
+      for(let i = 0; i < userObj.exercicios.length; i++){
+        exercicios.push(userObj.exercicios[i]);
+      }
+
+      this.db.collection(userObj.email).doc(`tipo-${userObj.tipo}`)
+      .set({
+        exercicios: exercicios,
+        tipo: userObj.tipo,
+        descricao: userObj.descricao,
+      }).then(success => {
+        resolve(true);
+      }).catch(e => {
+        console.log(e);
+        reject(false);
+      });
+    });
+
+    return conected;
+  }
  
   getTodos() {
     return this.todos;

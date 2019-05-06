@@ -7,6 +7,7 @@ const routes: Routes = [
   { path: 'treino/:type', loadChildren: './treino/treino.module#TreinoPageModule' },
   { path: 'editar-exercicio', loadChildren: './treino/editar-exercicio/editar-exercicio.module#EditarExercicioPageModule' },
   { path: '', loadChildren: './tabs/tabs.module#TabsPageModule' },
+  { path: 'cadastrar', loadChildren: './cadastrar/cadastrar.module#CadastrarPageModule' },
 ];
 @NgModule({
   imports: [
